@@ -2,7 +2,7 @@
 set -e
 
 # This script is meant for quick & easy install via:
-# $ curl -fsSL https://raw.githubusercontent.com/bitrixdock/bitrixdock/master/install.sh -o install.sh | sh install.sh
+# $ curl -fsSL https://raw.githubusercontent.com/lsvMystream/bitrixdock/master/install.sh -o install.sh | sh install.sh
 echo "Check requirements"
 apt-get -qq update
 hash git 2>/dev/null || { apt-get install -y git; }
@@ -14,7 +14,7 @@ mkdir -p /var/www/bitrix && \
 cd /var/www/bitrix && \
 wget https://www.1c-bitrix.ru/download/scripts/bitrixsetup.php && \
 cd /var/www/ && \
-git clone https://github.com/bitrixdock/bitrixdock.git && \
+git clone https://github.com/lsvMystream/bitrixdock.git && \
 cd /var/ && chmod -R 775 www/ && chown -R root:www-data www/ && \
 cd /var/www/bitrixdock
 
