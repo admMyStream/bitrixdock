@@ -4,7 +4,7 @@ set -e
 # This script is meant for quick & easy install via:
 # $ curl -fsSL https://raw.githubusercontent.com/lsvMystream/bitrixdock/master/install.sh -o install.sh | sh install.sh
 echo "Check requirements"
-if [[ "$(uname)" == "Linux" ]]; then
+if [ "$(uname)" = "Linux" ]; then
     apt-get -qq update
 fi
 hash git 2>/dev/null || { apt-get install -y git; }
