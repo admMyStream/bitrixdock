@@ -26,11 +26,7 @@ cd /var/www/bitrix && \
 wget https://www.1c-bitrix.ru/download/scripts/bitrixsetup.php && \
 cd /var/www/ && \
 git clone https://github.com/lsvMystream/bitrixdock.git && \
-cd /var/ && chmod -R 775 www/ && chown -R root:www-data www/ && \
-cd /var/www/bitrixdock
-
-echo "Config"
-cp -f .env_template .env
-
-echo "Run"
+cd /var/ && chmod -R 775 www/ && chown -R $(whoami) www/ && \
+cd /var/www/bitrixdock && \
+cp -f .env_template .env && \
 docker-compose up -d
