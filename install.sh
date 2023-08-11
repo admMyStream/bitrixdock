@@ -8,15 +8,15 @@ if [ "$(uname)" = "Linux" ]; then
     apt-get -qq update
     hash git 2>/dev/null || { apt-get install -y git; }
     hash docker 2>/dev/null || { cd /usr/local/src && wget -qO- https://get.docker.com/ | sh; }
-    hash docker-compose 2>/dev/null || { \
-        apt update && \
-        apt install docker-compose-plugin && \
-        docker compose version && \
-        sudo rm /usr/local/bin/docker-compose && \
-        echo 'alias docker-compose="docker compose"' >> ~/.bashrc && \
-        source ~/.bashrc && \
-        docker-compose version; \
-    }
+    if ! command -v docker-compose &> /dev/null; then
+        LATEST_VERSION="2.20.3"
+        curl -L "https://github.com/docker/compose/releases/download/$LATEST_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        chmod +x /usr/local/bin/docker-compose
+        
+        # Create an alias for docker-compose as docker compose
+        echo 'alias docker-compose="docker compose"' >> ~/.bashrc
+        source ~/.bashrc
+    fi
 fi
 
 
