@@ -28,5 +28,8 @@ cd /var/www/ && \
 git clone https://github.com/lsvMystream/bitrixdock.git && \
 cd /var/ && chmod -R 775 www/ && chown -R $(whoami) www/ && \
 cd /var/www/bitrixdock && \
-cp -f .env_template .env && \
+cp -f .env_template .env
+if [ "$(uname)" = "Linux" ]; then
+    chown -R $(whoami):www-data /var/www/
+fi
 docker-compose up -d
