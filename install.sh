@@ -7,11 +7,23 @@ echo "Check requirements"
 if [ "$(uname)" = "Linux" ]; then
     apt-get -qq update
 hash git 2>/dev/null || { apt-get install -y git; }
-hash docker 2>/dev/null || { cd /usr/local/src && wget -qO- https://get.docker.com/ | sh; }
+hash docker 2>/dev/null || {
+    apt update && \
+    apt install apt-transport-https ca-certificates curl software-properties-common && \
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add - && \
+    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" && \ 
+    apt-cache policy docker-ce && \
+    apt install docker-ce && \
+    sudo systemctl status docker; \
+}
 hash docker-compose 2>/dev/null || { \
-    apt install docker-compose-plugin \ 
+    apt update && \
+    apt install docker-compose-plugin && \
+    docker compose version && \
+    sudo rm /usr/local/bin/docker-compose && \
     echo 'alias docker-compose="docker compose"' >> ~/.bashrc && \
-    source ~/.bashrc; \
+    source ~/.bashrc && \
+    docker-compose version; \
 }
 fi
 
