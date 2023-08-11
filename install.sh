@@ -6,15 +6,15 @@ set -e
 echo "Check requirements"
 if [ "$(uname)" = "Linux" ]; then
     apt-get -qq update
-fi
 hash git 2>/dev/null || { apt-get install -y git; }
 hash docker 2>/dev/null || { cd /usr/local/src && wget -qO- https://get.docker.com/ | sh; }
-DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
 hash docker-compose 2>/dev/null || { \
-    mkdir -p $DOCKER_CONFIG/cli-plugins && \
-    curl -L "https://github.com/docker/compose/releases/download/2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o $DOCKER_CONFIG/cli-plugins/docker-compose && 
-    echo 'alias docker-compose="docker compose"' >> ~/.bashrc; \
+    apt install docker-compose-plugin \ 
+    echo 'alias docker-compose="docker compose"' >> ~/.bashrc && \
+    source ~/.bashrc; \
 }
+fi
+
 
 echo "Create folder struct"
 mkdir -p /var/www/bitrix && \
