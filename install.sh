@@ -15,7 +15,7 @@ if [ "$(uname)" = "Linux" ]; then
         
         # Create an alias for docker-compose as docker compose
         echo 'alias docker-compose="docker compose"' >> ~/.bashrc
-        . ~/.bashrc
+        alias docker-compose="docker compose"
     fi
 fi
 
