@@ -9,7 +9,11 @@ if [ "$(uname)" = "Linux" ]; then
 fi
 hash git 2>/dev/null || { apt-get install -y git; }
 hash docker 2>/dev/null || { cd /usr/local/src && wget -qO- https://get.docker.com/ | sh; }
-hash docker-compose 2>/dev/null || { curl -L "https://github.com/docker/compose/releases/download/2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && chmod +x /usr/local/bin/docker-compose && echo 'alias docker-compose="docker compose"' >> ~/.bashrc; }
+DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+hash docker-compose 2>/dev/null || { 
+    mkdir -p $DOCKER_CONFIG/cli-plugins &&
+    curl -L "https://github.com/docker/compose/releases/download/2.20.3/docker-compose-$(uname -s)-$(uname -m)" -o $DOCKER_CONFIG/cli-plugins/docker-compose && echo 'alias docker-compose="docker compose"' >> ~/.bashrc; 
+}
 
 echo "Create folder struct"
 mkdir -p /var/www/bitrix && \
