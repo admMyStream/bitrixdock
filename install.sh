@@ -9,7 +9,7 @@ if [ "$(uname)" = "Linux" ]; then
     hash git 2>/dev/null || { apt-get install -y git; }
     hash docker 2>/dev/null || { cd /usr/local/src && wget -qO- https://get.docker.com/ | sh; }
     if ! command -v docker-compose &> /dev/null; then
-        LATEST_VERSION="2.20.3"
+        LATEST_VERSION=$(curl -sI "https://github.com/docker/compose/releases/latest" | grep -i "location" | awk -F'/' '{print $NF}' | tr -d '\r\n')
         curl -L "https://github.com/docker/compose/releases/download/$LATEST_VERSION/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
         chmod +x /usr/local/bin/docker-compose
         
